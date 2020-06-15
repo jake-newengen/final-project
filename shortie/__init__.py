@@ -18,11 +18,13 @@ def create_app():
     # Blueprints
     from .controllers.auth import auth
     from .controllers.urls import urls
+    from .controllers.visits import visits
     from .utils.catch_all import catch_route
 
     # Blueprints
     app.register_blueprint(auth)
     app.register_blueprint(urls)
+    app.register_blueprint(visits)
     app.register_blueprint(catch_route)
 
     return app
