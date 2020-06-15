@@ -58,6 +58,7 @@ cover/
 # Flask stuff:
 instance/
 .webassets-cache
+static/
 
 __pypackages__/
 
