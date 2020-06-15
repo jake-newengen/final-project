@@ -1,24 +1,18 @@
-from flask import Flask, Blueprint, jsonify, request
+from flask import Flask
 
-# Blueprints
-from .controllers.auth import auth
+def create_app():
+  # Configure application
+  app = Flask(__name__, static_folder="static", static_url_path="/static")
 
-# Application Helper Functions
-from .utils.helpers import json_response
+  with app.app_context():
+    from flask import Blueprint
 
-# Configure application
-app = Flask(__name__, static_folder="static", static_url_path="/static")
+    # Blueprints
+    from .controllers.auth import auth
+    from .utils.catch_all import catch_route
 
-# Blueprints
-app.register_blueprint(auth)
+    # Blueprints
+    app.register_blueprint(auth)
+    app.register_blueprint(catch_route)
 
-# Auto-reload templates
-app.config["TEMPLATES_AUTO_RELOAD"] = True
-
-@app.route("/", defaults={"path": ""})
-@app.route("/<path:path>")
-def catch_all(path):
-    return app.send_static_file("index.html")
-
-if __name__ == "__main__":
-  app.run(debug=True)
+    return app
