@@ -1,20 +1,40 @@
-from flask import Blueprint, g, request, jsonify
+from flask import Blueprint, g, current_app, request, jsonify
 
+## Utils
 from ..utils.helpers import json_response
 from ..utils.database import query_db
-from ..utils.bcrypt import hash_password
+from ..utils.bcrypt import compare, hash_password
+from ..utils.jwt import generate
 
+# Blueprint
 auth = Blueprint("auth", __name__, url_prefix="/auth")
 
-@auth.route("/login", methods=["POST"])
-def login():
-  json = request.get_json()
-  return json_response({ "ok": 200, "username": json["username"] }, 200)
-
-
-FETCH_QUERY = "SELECT id, username FROM users WHERE username = :username;"
+## SQL Queries
+FETCH_QUERY = "SELECT * FROM users WHERE username = :username LIMIT 1;"
 SAVE_USER_QUERY = "INSERT INTO users (username, password) VALUES (:username, :password_hash);"
 FETCH_SAVED_USER_QUERY = "SELECT last_insert_rowid() as user_id;"
+
+## Login
+@auth.route("/login", methods=["POST"])
+def login():
+  body = request.get_json().keys()
+
+  if not "username" in body or not "password" in body:
+    return json_response({ "message": "Missing Params" }, 400)
+  else:
+    username, password = request.get_json().values()
+
+    # Look for user
+    user = query_db(FETCH_QUERY, { "username": username }, one=True)
+
+    if user:
+      if compare(password.encode("UTF-8"), user["password"]):
+        access_token = generate(user["id"], user["username"])
+        return json_response({ "access_token": access_token }, 200)
+      else:
+        return json_response({ "message": "Invalid password. "}, 400)
+    else:
+      return json_response({ "message": "User not found." }, 404)
 
 ## Register Account
 @auth.route("/register", methods=["POST"])
@@ -22,7 +42,7 @@ def register():
   body = request.get_json().keys()
 
   if not "username" in body or not "password" in body or not "confirmation" in body:
-    return json_response({ "ok": False, "error": "Invalid Params" }, 400)
+    return json_response({ "message": "Invalid Params" }, 400)
   else:
     username, password, confirmation = request.get_json().values()
     
@@ -31,12 +51,13 @@ def register():
 
     # Check to see if user with username already exists
     if user:
-      return json_response({ "ok": False, "message": "Username already used"}, 403)
+      return json_response({ "message": "Username already used" }, 403)
     else:
       if password == confirmation:
         # Create new user in database
         query_db(SAVE_USER_QUERY, { "username": username, "password_hash": hash_password(password) }, one=True)
-        res = query_db(FETCH_SAVED_USER_QUERY, one=True)
-        return json_response({ "ok": True, "user_id": res["user_id"] }, 200)
+        new_user = query_db(FETCH_SAVED_USER_QUERY, one=True)
+        access_token = generate(new_user["id"], new_user["username"])
+        return json_response({ "access_token": access_token }, 200)
       else:
-        return json_response({ "ok": False, "message": "Password confirmation does not match." }, 400)
+        return json_response({ "message": "Password confirmation does not match." }, 400)

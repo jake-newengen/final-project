@@ -5,12 +5,11 @@ import './App.css';
 function App() {
   useEffect(() => {
     (async () => {
-      let res = await fetch("/auth/register", {
+      let res = await fetch("/auth/login", {
         method: "POST",
         body: JSON.stringify({
           username: "jake",
-          password: "test",
-          confirmation: "test"
+          password: "test"
         }),
         headers: {
           "Content-Type": "application/json"
