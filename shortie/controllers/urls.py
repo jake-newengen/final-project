@@ -28,7 +28,7 @@ def get_user_urls():
 
   urls = query_db(FETCH_USER_URLS, { "user_id": current_user["user_id"] })
   for url in urls:
-    url["short_link"] = f"{os.getenv('HOST')}/urls/{encode(url['id'])}"
+    url["short_link"] = f"{os.getenv('HOST')}/v/{encode(url['id'])}"
   return json_response({ "urls": urls }, 200)
 
 ## Create New User Link
@@ -46,4 +46,4 @@ def create_user_url():
 
   query_db(CREATE_USER_URL, { "user_id": current_user["user_id"], "short_link": str(short_link), "external_link": data["external_link"] })
   last_row_id = query_db(FETCH_CREATED_URL_QUERY, one=True)
-  return json_response({ "short_link": f"{os.getenv('HOST')}/urls/{encode(last_row_id['id'])}" }, 200)
+  return json_response({ "short_link": f"{os.getenv('HOST')}/v/{encode(last_row_id['id'])}" }, 200)
