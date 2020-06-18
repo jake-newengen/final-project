@@ -4,3 +4,9 @@
 /* purgecss end ignore */
 
 @import "tailwindcss/utilities";
+
+
+/* Copy-able text input */
+input[type="text"].copyable:read-only::selection {
+  background-color: transparent;
+}

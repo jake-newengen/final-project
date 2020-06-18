@@ -14347,6 +14347,16 @@ video {
   transition-delay: 1000ms;
 }
 
+/* Copy-able text input */
+
+input[type="text"].copyable:-moz-read-only::selection {
+  background-color: transparent;
+}
+
+input[type="text"].copyable:read-only::selection {
+  background-color: transparent;
+}
+
 @media (min-width: 640px) {
   .sm\:space-y-0 > :not(template) ~ :not(template) {
     --space-y-reverse: 0;

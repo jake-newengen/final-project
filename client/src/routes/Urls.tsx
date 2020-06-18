@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 // Utils
 import { retrieve } from "utils/axios";
+import { CopyToClipboard } from "components/CopyToClipboard";
+import { TableRow } from "components/TableRow";
 
 const Urls = () => {
   let mounted = true;
+  const short_link_ref = useRef(null);
   const [urls, setUrls] = useState([]);
   const [fetching, setFetching] = useState(false);
 
@@ -48,28 +51,7 @@ const Urls = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {urls && urls.length && urls.map((url) => {
-                    const { id, external_link, short_link, created_at } = url;
-                    return (
-                      <tr key={id}>
-                        <td className="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
-                          {id}
-                        </td>
-                        <td className="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                          {created_at}
-                        </td>
-                        <td className="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                          {short_link}
-                        </td>
-                        <td className="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
-                          {external_link}
-                        </td>
-                        <td className="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
-                          <a href="#" className="text-indigo-600 hover:text-indigo-900">Delete</a>
-                        </td>
-                      </tr>
-                    )
-                  })}
+                  {urls && urls.length && urls.map((url: { [key: string]: any }) => <TableRow key={url.id} url={url} />)}
                 </tbody>
               </table>
             </div>
