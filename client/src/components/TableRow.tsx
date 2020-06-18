@@ -8,7 +8,7 @@ type TableRowProps = {
 
 const TableRow: React.FC<TableRowProps> = ({ url }) => {
   const ref = useRef(null);
-  const { id, external_link, short_link, created_at } = url;
+  const { id, external_link, short_link, created_at, total_visits } = url;
 
   function formatDate(date: string) {
     return format(new Date(date), "MM/dd/yyyy")
@@ -27,6 +27,9 @@ const TableRow: React.FC<TableRowProps> = ({ url }) => {
       </td>
       <td className="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
         {external_link}
+      </td>
+      <td className="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-500">
+        {total_visits}
       </td>
       <td className="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
         <CopyToClipboard buttonText="Copy to clipboard" textRef={ref} />

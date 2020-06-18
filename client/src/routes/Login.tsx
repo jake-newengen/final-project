@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const Auth = () => {
+const Login = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -93,7 +93,7 @@ const Auth = () => {
 
             <div className="mt-6">
               <p className="mt-2 text-center text-sm leading-5 text-gray-600 max-w">
-                <Link to="/register" className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">Register for an account</Link>
+                <Link to="/auth/register" className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">Register for an account</Link>
               </p>
             </div>
 
@@ -104,4 +104,4 @@ const Auth = () => {
   );
 };
 
-export { Auth };
+export { Login };

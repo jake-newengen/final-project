@@ -12,4 +12,12 @@ const retrieve = async (endpoint: string, params?: { [key: string]: any }) => {
   });
 };
 
-export { retrieve };
+const send = async (endpoint: string, data?: { [key: string]: any }) => {
+  return await axios.post(endpoint, data, {
+    headers: {
+      Authorization: `Bearer ${window.localStorage.getItem("s-tk")}`
+    }
+  });
+};
+
+export { retrieve, send };

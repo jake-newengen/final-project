@@ -16,10 +16,11 @@ from ..utils.shorten import encode, decode
 urls = Blueprint("urls", __name__, url_prefix="/urls")
 
 ## SQL Queries
-FETCH_USER_URLS = "SELECT id, external_link, created_at FROM urls WHERE user_id = :user_id;"
+FETCH_USER_URLS = "SELECT id, external_link, created_at FROM urls WHERE user_id = :user_id ORDER BY created_at DESC;"
 FETCH_USER_URL = "SELECT * FROM urls WHERE id = :link_id LIMIT 1;"
 CREATE_USER_URL = "INSERT INTO urls (user_id, short_link, external_link) VALUES (:user_id, :short_link, :external_link);"
 FETCH_CREATED_URL_QUERY = "SELECT last_insert_rowid() as id;"
+COUNT_URL_VISITS = "SELECT count(*) as total_visits FROM visits WHERE link_id = :link_id;"
 
 @urls.route("/", methods=["GET"])
 @jwt_required
@@ -28,7 +29,12 @@ def get_user_urls():
 
   urls = query_db(FETCH_USER_URLS, { "user_id": current_user["user_id"] })
   for url in urls:
-    url["short_link"] = f"{os.getenv('HOST')}/v/{encode(url['id'])}"
+    url_id = url['id']
+
+    # get total visits
+    res = query_db(COUNT_URL_VISITS, { "link_id": url_id }, one=True)
+    url["total_visits"] = res["total_visits"]
+    url["short_link"] = f"{os.getenv('HOST')}/v/{encode(url_id)}"
   return json_response({ "urls": urls }, 200)
 
 ## Create New User Link

@@ -29,7 +29,7 @@ def login():
 
     if user:
       if compare(password.encode("UTF-8"), user["password"]):
-        access_token = generate(user["id"], user["username"])
+        access_token = generate(user["id"])
         return json_response({ "access_token": access_token }, 200)
       else:
         return json_response({ "message": "Invalid password. "}, 400)
@@ -57,7 +57,8 @@ def register():
         # Create new user in database
         query_db(SAVE_USER_QUERY, { "username": username, "password_hash": hash_password(password) }, one=True)
         new_user = query_db(FETCH_SAVED_USER_QUERY, one=True)
-        access_token = generate(new_user["id"], new_user["username"])
+
+        access_token = generate(new_user["user_id"])
         return json_response({ "access_token": access_token }, 200)
       else:
         return json_response({ "message": "Password confirmation does not match." }, 400)
