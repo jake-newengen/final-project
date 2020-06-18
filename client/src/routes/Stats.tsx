@@ -7,26 +7,26 @@ const Stats = () => {
         <div className="flex flex-col">
           <div className="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
             <div className="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
-              <table className="min-w-full">
+              <table className="min-w-full bg-white">
                 <thead>
                   <tr>
                     <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                      Name
+                      ID
                     </th>
                     <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                      Title
+                      Created On
                     </th>
                     <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                      Email
+                      URL
                     </th>
                     <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                      Role
+                      External URL
                     </th>
                     <th className="px-6 py-3 border-b border-gray-200 bg-gray-50"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="bg-white">
+                  <tr>
                     <td className="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
                       Bernard Lane
                     </td>
@@ -44,7 +44,7 @@ const Stats = () => {
                       </a>
                     </td>
                   </tr>
-                  <tr className="bg-gray-50">
+                  <tr>
                     <td className="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
                       Bernard Lane
                     </td>
@@ -62,7 +62,7 @@ const Stats = () => {
                       </a>
                     </td>
                   </tr>
-                  <tr className="bg-white">
+                  <tr>
                     <td className="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
                       Bernard Lane
                     </td>
@@ -80,7 +80,7 @@ const Stats = () => {
                       </a>
                     </td>
                   </tr>
-                  <tr className="bg-gray-50">
+                  <tr>
                     <td className="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
                       Bernard Lane
                     </td>
@@ -98,7 +98,7 @@ const Stats = () => {
                       </a>
                     </td>
                   </tr>
-                  <tr className="bg-white">
+                  <tr>
                     <td className="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium text-gray-900">
                       Bernard Lane
                     </td>

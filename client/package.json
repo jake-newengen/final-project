@@ -26,6 +26,7 @@
     "postcss-nested": "^4.2.1",
     "postcss-scss": "^2.0.0",
     "prettier": "^1.19.1",
+    "qs": "^6.9.4",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-hook-form": "^5.7.2",
@@ -58,5 +59,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/qs": "^6.9.3"
   }
 }

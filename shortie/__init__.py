@@ -2,11 +2,13 @@ import os
 
 # Core
 from flask import Flask
+from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 
 def create_app():
   # Configure application
   app = Flask(__name__, static_folder="static", static_url_path="/static")
+  CORS(app)
 
   # Configure JWT
   app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")

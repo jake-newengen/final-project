@@ -16,7 +16,7 @@ from ..utils.shorten import encode, decode
 urls = Blueprint("urls", __name__, url_prefix="/urls")
 
 ## SQL Queries
-FETCH_USER_URLS = "SELECT id, external_link FROM urls WHERE user_id = :user_id;"
+FETCH_USER_URLS = "SELECT id, external_link, created_at FROM urls WHERE user_id = :user_id;"
 FETCH_USER_URL = "SELECT * FROM urls WHERE id = :link_id LIMIT 1;"
 CREATE_USER_URL = "INSERT INTO urls (user_id, short_link, external_link) VALUES (:user_id, :short_link, :external_link);"
 FETCH_CREATED_URL_QUERY = "SELECT last_insert_rowid() as id;"
